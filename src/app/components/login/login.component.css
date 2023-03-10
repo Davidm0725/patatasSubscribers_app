@@ -1,0 +1,31 @@
+.containerLogin {
+    border: 1px solid cadetblue;
+    background-color: white;
+    border-radius: 10px;
+    height: 400px;
+    width: 350px;
+    text-align: center;
+    margin: 0 auto;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+
+.cont-img {
+    margin-top: 30px;
+}
+
+.iconBtn {
+    border: none;
+}
+
+input.example-right-align::-webkit-outer-spin-button,
+input.example-right-align::-webkit-inner-spin-button {
+  display: none;
+}
+
+input.example-right-align {
+  -moz-appearance: textfield;
+}
+
+.inputPass {
+    width: 60% !important;
+}
