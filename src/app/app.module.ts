@@ -14,13 +14,25 @@ import { MatButtonModule } from '@angular/material/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
-import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import { ButtonModule } from 'primeng/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatTableModule } from '@angular/material/table';
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
+import { ToolbarModule } from 'primeng/toolbar';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { SpinnerInterceptor } from './shared/interceptors/spinner.interceptor';
+import { SpinnerModule } from './generic-components/spinner/spinner.module';
+import { ConfirmDialogComponent } from './generic-components/confirm-dialog/confirm-dialog.component';
+import {MatDialogModule} from '@angular/material/dialog';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    AdminPageComponent
+    AdminPageComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -33,10 +45,21 @@ import {ProgressSpinnerModule} from 'primeng/progressspinner';
     MatInputModule,
     MatIconModule,
     MatButtonModule,
-    ProgressSpinnerModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    ButtonModule,
+    MatTooltipModule,
+    MatTableModule,
+    MessagesModule,
+    MessageModule,
+    ToolbarModule,
+    SpinnerModule,
+    MatDialogModule
   ],
-  providers: [ MessageService, ConfirmationService],
+  providers: [
+    MessageService,
+    ConfirmationService,
+    { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

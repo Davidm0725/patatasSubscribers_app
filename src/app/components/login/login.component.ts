@@ -37,13 +37,23 @@ export class LoginComponent {
       UserName: form.value.userName, Password: form.value.password
     }
     if (form.valid) {
-      this.authservice.auth(`${urlBase}account/login`, body).subscribe(resp => {
-        if (resp.Status === 1) {
-          this.router.navigate(['/', 'admin'])
-        } else {
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: resp.error, life: 3000 });
-        }
-      })
+      this.authservice.auth(`${urlBase}account/login`, body).subscribe(
+        {
+          next: resp => {
+            if (resp.Status === 1) {
+              sessionStorage.setItem('Token', resp.Token);
+              // this.bhvSubComponentSvc.setobjToken(resp.Token);
+              this.router.navigate(['/', 'admin'])
+            } else {
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Internal server error', life: 3000 });
+            }
+          },
+          error: err => {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: err.error.error, life: 3000 });
+          }
+        });
     }
   }
 }
+
+

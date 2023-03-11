@@ -1,4 +1,26 @@
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 
+
+.p-button-rounded {
+    border-radius: 3px !important;
+}
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: whitesmoke;}
+
+.overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(74,74,74,.8);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.alertMsgNot {
+    position: fixed;
+    z-index: 10;
+    width: 100%;
+}
+

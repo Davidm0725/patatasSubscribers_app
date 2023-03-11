@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/enviroments/environment';
-// import { Auth } from 'src/app/shared/models';
 
 const urlBase = environment.URL_BASE;
 
@@ -16,7 +15,6 @@ export class AuthService {
   constructor(private http: HttpClient) {
     this.httpHeaders = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer jwttoken'
     });
   }
 
