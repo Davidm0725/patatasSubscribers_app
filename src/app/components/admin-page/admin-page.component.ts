@@ -20,9 +20,10 @@ export class AdminPageComponent {
   displayedColumns: string[] = ['Id', 'Name', 'Email', 'Phone Number', 'Country Name', 'Area', 'Subscription State', 'Actions'];
   dataSource: any = [];
   crateDialog = false;
-  page: number = 1;
+  page = 1;
   formCreate: any;
   subscriberUpdate: any;
+  countSubs!: number;
 
 
   constructor(
@@ -33,7 +34,7 @@ export class AdminPageComponent {
   ) { }
 
   ngOnInit() {
-    this.getSubscribers(this.page);
+    this.getSubscribers();
   }
 
   openDialog(enterAnimationDuration: string, exitAnimationDuration: string, element: any): void {
@@ -52,9 +53,9 @@ export class AdminPageComponent {
 
   }
 
-  getSubscribers(numPage: number) {
+  getSubscribers() {
     let params = {
-      page: numPage,
+      page: this.page,
       count: 10,
       sortType: 0
     }
@@ -62,6 +63,7 @@ export class AdminPageComponent {
       {
         next: resp => {
           if (resp.Data) {
+            this.countSubs = resp.Count;
             this.dataSource = resp.Data;
           } else {
             this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Internal server error', life: 3000 });
@@ -80,7 +82,7 @@ export class AdminPageComponent {
   hideDialog(event: any) {
     this.crateDialog = event.creaDialog;
     if (event.action === 'save') {
-      this.getSubscribers(this.page);
+      this.getSubscribers();
     } else {
       this.subscriberUpdate = "";
     }
@@ -98,7 +100,7 @@ export class AdminPageComponent {
         next: response => {
           if (response.message === "Subscriber deleted successfully") {
             this.showMessage({ severity: 'success', detail: response.message, summary: 'Successful' });
-            this.getSubscribers(this.page);
+            this.getSubscribers();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Internal server error', life: 3000 });
           }
@@ -119,5 +121,24 @@ export class AdminPageComponent {
   updateSubs(element: any) {
     this.subscriberUpdate = { action: 'update', subsUpdate: element };
     this.crateDialog = true;
+  }
+
+  validatePaginator(): boolean {
+    var valuePage = this.page * 10;
+    if (this.countSubs > valuePage) {
+      return false
+    } else {
+      return true;
+    }
+  }
+
+  nextPage() {
+    this.page = this.page + 1;
+    this.getSubscribers();
+  }
+
+  beforePage() {
+    this.page = this.page - 1;
+    this.getSubscribers();
   }
 }

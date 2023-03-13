@@ -17,6 +17,25 @@ h1 {
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
+.containerPaginator {
+    height: 50px;
+    background-color: white;
+    min-width: 860px;
+    box-shadow: rgb(38 57 77) 0px 20px 30px -10px;
+}
+
+.cont-btn-pg {
+    float: right;
+    margin-right: 40px;
+}
+
+.containerTable {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 20px;
+    padding-bottom: 30px;
+}
+
 .page {
     height: auto;
     text-align: center;
@@ -33,6 +52,10 @@ button {
     border: none;
     cursor: pointer;
     background-color: transparent;
+}
+
+.rigthBtn {
+    margin-left: 0 !important;
 }
 
 .menuBar {

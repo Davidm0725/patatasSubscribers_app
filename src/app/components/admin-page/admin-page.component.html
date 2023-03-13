@@ -14,8 +14,7 @@
             <button type="button" pButton pRipple label="Create Subscriber +" class="p-button-rounded"
                 (click)="createSubscriber()"></button>
         </div>
-        <div style="margin-left: 10px;margin-right: 10px;margin-top: 20px;">
-
+        <div class="containerTable">
             <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
                 <!-- Position Column -->
                 <ng-container matColumnDef="Id">
@@ -71,7 +70,19 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
+            <div class="containerPaginator">
+                <div class="cont-btn-pg">
+                    <button class="iconBtn" [disabled]="page === 1" (click)="beforePage()">
+                        <mat-icon>navigate_before</mat-icon>
+                    </button>
+                    <small>Page {{page}}</small>
+                    <button class="iconBtn rigthBtn" (click)="nextPage()" [disabled]="validatePaginator()">
+                        <mat-icon>navigate_next</mat-icon>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
-    <app-form [openForm]="crateDialog" [subsUpdate]="subscriberUpdate" (hideForm)="hideDialog($event)" *ngIf="crateDialog"></app-form>
+    <app-form [openForm]="crateDialog" [subsUpdate]="subscriberUpdate" (hideForm)="hideDialog($event)"
+        *ngIf="crateDialog"></app-form>
 </div>

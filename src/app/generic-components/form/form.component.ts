@@ -50,7 +50,6 @@ export class FormComponent {
 
   validateUpdate() {
     const { action, subsUpdate } = this.subsUpdate;
-    console.log(this.subsUpdate, 'subUPDATE')
     if (action === 'update') {
       this.formCreate.setValue({
         name: subsUpdate.Name,

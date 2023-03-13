@@ -30,6 +30,7 @@ export class LoginComponent {
       userName: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required])
     });
+    sessionStorage.removeItem('Token');
   }
 
   onSubmit(form: FormGroup) {
