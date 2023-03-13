@@ -1,7 +1,7 @@
 import { HttpEvent, HttpInterceptor, HttpRequest, HttpHandler } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { SpinnerService } from "src/app/services/spinner.service";
+import { SpinnerService } from "src/app/components/services/spinner.service";
 import { finalize } from "rxjs/operators";
 
 @Injectable()

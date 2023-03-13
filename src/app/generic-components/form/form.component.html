@@ -1,0 +1,49 @@
+<p-dialog [(visible)]="crateDialog" [style]="{width: '450px'}" header="Create Subscriber" [modal]="true"
+    styleClass="p-fluid" [closable]="false">
+    <p-messages severity="info" class="alertMsgNot"></p-messages>
+
+    <form [formGroup]="formCreate" (ngSubmit)="saveAll(formCreate)">
+        <div class="field">
+            <label for="name">Name</label>
+            <input type="text" formControlName="name" pInputText id="name" required autofocus />
+            <small class="p-error" *ngIf="submitted && !formCreate.value.name">Name is required.</small>
+        </div>
+        <div class="field">
+            <label for="email">email</label>
+            <input type="text" id="email" formControlName="email" pInputText required autofocus />
+            <small class="p-error"
+                *ngIf="(submitted && !formCreate.value.email) || formCreate.controls['email'].touched">
+                <span *ngIf="submitted && !formCreate.value.email">Email is required.</span>
+                <span *ngIf="!submitted && formCreate.controls['email'].invalid">Invalid email format</span>
+            </small>
+        </div>
+        <div class="field">
+            <label for="phoneNumber">Phone number</label>
+            <input type="number" id="email" formControlName="phoneNumber" pInputText required autofocus />
+            <small class="p-error"
+                *ngIf="(submitted && !formCreate.value.phoneNumber) || formCreate.controls['phoneNumber'].touched">
+                <span *ngIf="submitted && !formCreate.value.phoneNumber">Phone
+                    number is required.</span>
+                <span *ngIf="!submitted && formCreate.controls['phoneNumber'].invalid">Invalid
+                    format</span>
+            </small>
+        </div>
+        <div class="field">
+            <label for="CountryName">Country</label>
+            <p-dropdown formControlName="countryCode" [options]="countries" optionLabel="Name"
+                placeholder="Select a City">
+            </p-dropdown>
+        </div>
+        <div style="padding-top: 40px; float: right;">
+            <span class="p-buttonset">
+                <div>
+                    <button pButton type="button" label="Cancel" icon="pi pi-times" class="p-button-sm"
+                        (click)="hideDialog('cancel')"></button>
+                </div>
+                <div>
+                    <button pButton type="submit" label="Save" icon="pi pi-check" class="p-button-sm"></button>
+                </div>
+            </span>
+        </div>
+    </form>
+</p-dialog>

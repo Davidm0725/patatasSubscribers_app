@@ -25,6 +25,11 @@ import { SpinnerInterceptor } from './shared/interceptors/spinner.interceptor';
 import { SpinnerModule } from './generic-components/spinner/spinner.module';
 import { ConfirmDialogComponent } from './generic-components/confirm-dialog/confirm-dialog.component';
 import {MatDialogModule} from '@angular/material/dialog';
+import { FormComponent } from './generic-components/form/form.component';
+import {DialogModule} from 'primeng/dialog';
+import {InputTextModule} from 'primeng/inputtext';
+import {DropdownModule} from 'primeng/dropdown';
+
 
 
 @NgModule({
@@ -32,7 +37,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     AppComponent,
     LoginComponent,
     AdminPageComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    FormComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +59,10 @@ import {MatDialogModule} from '@angular/material/dialog';
     MessageModule,
     ToolbarModule,
     SpinnerModule,
-    MatDialogModule
+    MatDialogModule,
+    DialogModule,
+    InputTextModule,
+    DropdownModule
   ],
   providers: [
     MessageService,

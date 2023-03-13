@@ -42,7 +42,6 @@ export class LoginComponent {
           next: resp => {
             if (resp.Status === 1) {
               sessionStorage.setItem('Token', resp.Token);
-              // this.bhvSubComponentSvc.setobjToken(resp.Token);
               this.router.navigate(['/', 'admin'])
             } else {
               this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Internal server error', life: 3000 });

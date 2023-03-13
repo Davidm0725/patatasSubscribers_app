@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { environment } from 'src/enviroments/environment';
 import { SubscribersService } from '../services/subscribers.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/generic-components/confirm-dialog/confirm-dialog.component';
+import { Router } from '@angular/router';
 
 const urlBase = environment.URL_BASE;
 
@@ -13,31 +13,24 @@ const urlBase = environment.URL_BASE;
   selector: 'app-admin-page',
   templateUrl: './admin-page.component.html',
   styleUrls: ['./admin-page.component.css'],
-  styles: [`
-  :host ::ng-deep .p-dialog .product-image {
-      width: 150px;
-      margin: 0 auto 2rem auto;
-      display: block;
-  }
-`],
   providers: [MessageService, ConfirmationService]
 
 })
 export class AdminPageComponent {
   displayedColumns: string[] = ['Id', 'Name', 'Email', 'Phone Number', 'Country Name', 'Area', 'Subscription State', 'Actions'];
   dataSource: any = [];
-  crateDialog: boolean = false;
-  submitted: boolean = false;
+  crateDialog = false;
   page: number = 1;
   formCreate: any;
+  subscriberUpdate: any;
 
 
   constructor(
     private subscribers: SubscribersService,
-    private fb: FormBuilder,
     private messageService: MessageService,
-    public dialog: MatDialog
-  ) { this.resetForm(); }
+    public dialog: MatDialog,
+    private router: Router,
+  ) { }
 
   ngOnInit() {
     this.getSubscribers(this.page);
@@ -52,21 +45,11 @@ export class AdminPageComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result, 'resul')
       if (result.confirm === 'Ok') {
         this.deleteSubs(result.subs);
       }
     });
 
-  }
-
-  resetForm() {
-    this.formCreate = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', Validators.required],
-      CountryCode: [''],
-      phoneNumber: ['']
-    });
   }
 
   getSubscribers(numPage: number) {
@@ -75,36 +58,57 @@ export class AdminPageComponent {
       count: 10,
       sortType: 0
     }
-    this.subscribers.getSubscribers(`${urlBase}subscribers/`, params).subscribe(response => {
-      this.dataSource = response.Data;
-      console.log(this.dataSource, 'dtasourse');
-    });
+    this.subscribers.getSubscribers(`${urlBase}subscribers/`, params).subscribe(
+      {
+        next: resp => {
+          if (resp.Data) {
+            this.dataSource = resp.Data;
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Internal server error', life: 3000 });
+          }
+        },
+        error: err => {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: err.error.Message, life: 3000 });
+          setTimeout(() => {
+            this.router.navigate(['/', 'login']);
+          }, 1000);
+        }
+
+      });
+  }
+
+  hideDialog(event: any) {
+    this.crateDialog = event.creaDialog;
+    if (event.action === 'save') {
+      this.getSubscribers(this.page);
+    } else {
+      this.subscriberUpdate = "";
+    }
   }
 
   createSubscriber() {
-    this.resetForm();
-    // this.id = 0;
-    // this.code = "";
-    // this.title = "";
-    this.submitted = false;
+    this.subscriberUpdate = { action: 'create', subsUpdate: "" };
     this.crateDialog = true;
   }
 
 
-  hideDialog() {
-    this.crateDialog = false;
-    this.submitted = false;
-  }
-
   deleteSubs(element: any) {
-    this.subscribers.deleteSubscribers(`${urlBase}subscribers/${element.Id}`).subscribe(response => {
-      if (response.message === "Subscriber deleted successfully") {
-        this.showMessage({ severity: 'success', detail: response.message, summary: 'Successful' });
-        this.getSubscribers(this.page);
-      } else {
-        this.showMessage({ severity: 'error', detail: 'Internal server error.', summary: 'Error' });
-      }
-    });
+    this.subscribers.deleteSubscribers(`${urlBase}subscribers/${element.Id}`).subscribe(
+      {
+        next: response => {
+          if (response.message === "Subscriber deleted successfully") {
+            this.showMessage({ severity: 'success', detail: response.message, summary: 'Successful' });
+            this.getSubscribers(this.page);
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Internal server error', life: 3000 });
+          }
+        },
+        error: err => {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: err.error.Message, life: 3000 });
+          this.router.navigate(['/', 'login'])
+        }
+
+      });
   }
 
   showMessage(typeError: any) {
@@ -112,14 +116,8 @@ export class AdminPageComponent {
     this.messageService.add({ severity: severity, summary: summary, detail: detail, life: 3000 });
   }
 
-  updateSubs(elemnt: any) {
-    // this.id = elemnt.id;
-    // this.code = elemnt.code;
-    // this.title = elemnt.title;
-    // this.description = elemnt.description;
-    // this.updateCategoryAction = true;
-    // this.submitted = false;
-    // this.crateDialog = true;
-
+  updateSubs(element: any) {
+    this.subscriberUpdate = { action: 'update', subsUpdate: element };
+    this.crateDialog = true;
   }
 }
