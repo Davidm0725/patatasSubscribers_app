@@ -66,11 +66,11 @@ export class AdminPageComponent {
             this.countSubs = resp.Count;
             this.dataSource = resp.Data;
           } else {
-            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Internal server error', life: 3000 });
+            this.showMessage({ severity: 'error', summary: 'Error', detail: 'Internal server error', life: 3000 });
           }
         },
         error: err => {
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: err.error.Message, life: 3000 });
+          this.showMessage({ severity: 'error', summary: 'Error', detail: err.error.Message, life: 3000 });
           setTimeout(() => {
             this.router.navigate(['/', 'login']);
           }, 1000);
@@ -102,19 +102,19 @@ export class AdminPageComponent {
             this.showMessage({ severity: 'success', detail: response.message, summary: 'Successful' });
             this.getSubscribers();
           } else {
-            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Internal server error', life: 3000 });
+            this.showMessage({ severity: 'error', summary: 'Error', detail: 'Internal server error', life: 3000 });
           }
         },
         error: err => {
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: err.error.Message, life: 3000 });
+          this.showMessage({ severity: 'error', summary: 'Error', detail: err.error.Message, life: 3000 });
           this.router.navigate(['/', 'login'])
         }
 
       });
   }
 
-  showMessage(typeError: any) {
-    const { severity, detail, summary } = typeError;
+  showMessage(msgShow: any) {
+    const { severity, detail, summary } = msgShow;
     this.messageService.add({ severity: severity, summary: summary, detail: detail, life: 3000 });
   }
 

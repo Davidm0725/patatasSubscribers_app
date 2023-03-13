@@ -111,6 +111,7 @@ export class FormComponent {
   }
 
   saveUpdateSubscriber(formUpdate: any) {
+    console.log(formUpdate, 'formUpdate')
     const { subsUpdate } = this.subsUpdate;
     const body = {
       "Id": subsUpdate.Id,
