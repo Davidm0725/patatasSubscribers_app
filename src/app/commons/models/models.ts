@@ -1,4 +1,4 @@
-export interface AuthQuery {
+export interface IAuth {
     username: string,
     password: string
 }

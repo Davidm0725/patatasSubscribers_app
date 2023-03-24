@@ -2,9 +2,8 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { AuthQuery } from 'src/app/shared/models';
 import { environment } from 'src/enviroments/environment';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../commons/services/auth.service';
 const urlBase = environment.URL_BASE;
 
 
@@ -15,7 +14,6 @@ const urlBase = environment.URL_BASE;
   providers: [MessageService]
 })
 export class LoginComponent {
-  params!: AuthQuery;
   hide = true;
   loginForm: any;
 
@@ -30,7 +28,7 @@ export class LoginComponent {
       userName: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required])
     });
-    sessionStorage.removeItem('Token');
+    localStorage.removeItem('Token');
   }
 
   onSubmit(form: FormGroup) {
@@ -42,7 +40,7 @@ export class LoginComponent {
         {
           next: resp => {
             if (resp.Status === 1) {
-              sessionStorage.setItem('Token', resp.Token);
+              localStorage.setItem('Token', resp.Token);
               this.router.navigate(['/', 'admin'])
             } else {
               this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Internal server error', life: 3000 });

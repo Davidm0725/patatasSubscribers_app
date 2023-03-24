@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SubscribersService } from 'src/app/components/services/subscribers.service';
+import { SubscribersService } from 'src/app/commons/services/subscribers.service';
 import { environment } from 'src/enviroments/environment';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';

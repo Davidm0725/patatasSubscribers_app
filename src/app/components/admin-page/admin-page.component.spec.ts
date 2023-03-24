@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AdminPageComponent } from './admin-page.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { SubscribersService } from '../services/subscribers.service';
+import { SubscribersService } from '../../commons/services/subscribers.service';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AppModule } from 'src/app/app.module';
 

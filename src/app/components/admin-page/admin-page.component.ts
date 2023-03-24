@@ -1,13 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { environment } from 'src/enviroments/environment';
-import { SubscribersService } from '../services/subscribers.service';
+import { SubscribersService } from '../../commons/services/subscribers.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/generic-components/confirm-dialog/confirm-dialog.component';
 import { Router } from '@angular/router';
 
 const urlBase = environment.URL_BASE;
-
 
 @Component({
   selector: 'app-admin-page',
@@ -21,20 +20,24 @@ export class AdminPageComponent {
   dataSource: any = [];
   crateDialog = false;
   page = 1;
+  totalPage = 0;
+  resultxPage = 0;
   formCreate: any;
   subscriberUpdate: any;
   countSubs!: number;
+  private subscribers = inject(SubscribersService);
+  private messageService = inject(MessageService);
+  private dialog = inject(MatDialog);
+  private router = inject(Router);
 
-
-  constructor(
-    private subscribers: SubscribersService,
-    private messageService: MessageService,
-    public dialog: MatDialog,
-    private router: Router,
-  ) { }
+  constructor() { }
 
   ngOnInit() {
     this.getSubscribers();
+  }
+
+  resultXpage() {
+    this.resultxPage = this.countSubs
   }
 
   openDialog(enterAnimationDuration: string, exitAnimationDuration: string, element: any): void {
@@ -55,8 +58,10 @@ export class AdminPageComponent {
 
   getSubscribers() {
     let params = {
+      criteria: "",
       page: this.page,
       count: 10,
+      sortOrder: "",
       sortType: 0
     }
     this.subscribers.getSubscribers(`${urlBase}subscribers/`, params).subscribe(
@@ -65,6 +70,7 @@ export class AdminPageComponent {
           if (resp.Data) {
             this.countSubs = resp.Count;
             this.dataSource = resp.Data;
+            this.totalPage = Math.ceil(this.countSubs / 10)
           } else {
             this.showMessage({ severity: 'error', summary: 'Error', detail: 'Internal server error', life: 3000 });
           }
@@ -124,11 +130,18 @@ export class AdminPageComponent {
   }
 
   validatePaginator(): boolean {
-    var valuePage = this.page * 10;
-    if (this.countSubs > valuePage) {
+    if (this.countSubs > (this.page * 10)) {
       return false
     } else {
       return true;
+    }
+  }
+
+  countResultsValidate() {
+    if (this.countSubs < 10) {
+      this.resultxPage = this.countSubs;
+    } else {
+      this.resultxPage = 10;
     }
   }
 

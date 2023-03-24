@@ -21,14 +21,16 @@ import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { ToolbarModule } from 'primeng/toolbar';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { SpinnerInterceptor } from './shared/interceptors/spinner.interceptor';
+import { SpinnerInterceptor } from './commons/interceptors/spinner.interceptor';
 import { SpinnerModule } from './generic-components/spinner/spinner.module';
 import { ConfirmDialogComponent } from './generic-components/confirm-dialog/confirm-dialog.component';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { FormComponent } from './generic-components/form/form.component';
-import {DialogModule} from 'primeng/dialog';
-import {InputTextModule} from 'primeng/inputtext';
-import {DropdownModule} from 'primeng/dropdown';
+import { DialogModule } from 'primeng/dialog';
+import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
+import {MatGridListModule} from '@angular/material/grid-list';
+import { TokenInterceptorService } from './commons/interceptors/token.interceptor';
 
 
 
@@ -62,12 +64,18 @@ import {DropdownModule} from 'primeng/dropdown';
     MatDialogModule,
     DialogModule,
     InputTextModule,
-    DropdownModule
+    DropdownModule,
+    MatGridListModule
   ],
   providers: [
     MessageService,
     ConfirmationService,
-    { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

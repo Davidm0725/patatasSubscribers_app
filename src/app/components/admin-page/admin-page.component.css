@@ -13,20 +13,20 @@ h1 {
 
 .containerPage {
     background-color: whitesmoke;
-    min-width: 860px;
+    min-width: 892px;
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
 .containerPaginator {
     height: 50px;
     background-color: white;
-    min-width: 860px;
     box-shadow: rgb(38 57 77) 0px 20px 30px -10px;
 }
 
 .cont-btn-pg {
     float: right;
     margin-right: 40px;
+    background-color: aqua;
 }
 
 .containerTable {
@@ -58,12 +58,33 @@ button {
     margin-left: 0 !important;
 }
 
+small,
+strong {
+    padding-top: 10px;
+}
+
+strong {
+    margin-left: 15px;
+}
+
+mat-form-field {
+    margin-right: 60px;
+    float: right;
+    padding-top: 5px;
+}
+
 .menuBar {
     margin-left: 10px;
     margin-right: 10px;
-    height: 60px;
+    height: 65px;
     min-width: 850px;
     text-align: initial;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     background-color: white;
+}
+
+.searchBtn {
+    float: right;
+    margin-right: 10px;
+    margin-top: 10px;
 }

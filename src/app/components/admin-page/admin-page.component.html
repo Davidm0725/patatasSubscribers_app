@@ -12,7 +12,14 @@
     <div class="page">
         <div class="menuBar">
             <button type="button" pButton pRipple label="Create Subscriber +" class="p-button-rounded"
-                (click)="createSubscriber()"></button>
+                (click)="createSubscriber()">
+            </button>
+            <!-- <mat-form-field>
+                <input type="text" matInput placeholder="Search">
+            </mat-form-field> -->
+            <div class="searchBtn">
+                <p-button icon="pi pi-search" styleClass="p-button-secondary"></p-button>
+            </div>
         </div>
         <div class="containerTable">
             <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -70,16 +77,21 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
+
             <div class="containerPaginator">
-                <div class="cont-btn-pg">
-                    <button class="iconBtn" [disabled]="page === 1" (click)="beforePage()">
-                        <mat-icon>navigate_before</mat-icon>
-                    </button>
-                    <small>Page {{page}}</small>
-                    <button class="iconBtn rigthBtn" (click)="nextPage()" [disabled]="validatePaginator()">
-                        <mat-icon>navigate_next</mat-icon>
-                    </button>
-                </div>
+                <mat-grid-list cols="3" rowHeight="50px">
+                    <mat-grid-tile></mat-grid-tile>
+                    <mat-grid-tile><strong>{{resultxPage}} of {{countSubs}} Results</strong></mat-grid-tile>
+                    <mat-grid-tile>
+                        <button class="iconBtn" [disabled]="page === 1" (click)="beforePage()">
+                            <mat-icon>navigate_before</mat-icon>
+                        </button>
+                        <small>Page {{page}} of {{totalPage}}</small>
+                        <button class="iconBtn rigthBtn" (click)="nextPage()" [disabled]="validatePaginator()">
+                            <mat-icon>navigate_next</mat-icon>
+                        </button>
+                    </mat-grid-tile>
+                </mat-grid-list>
             </div>
         </div>
     </div>

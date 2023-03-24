@@ -1,7 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppModule } from 'src/app/app.module';
-import { SubscribersService } from 'src/app/components/services/subscribers.service';
+import { SubscribersService } from 'src/app/commons/services/subscribers.service';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { FormComponent } from './form.component';
 
